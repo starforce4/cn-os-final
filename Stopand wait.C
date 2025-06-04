@@ -1,31 +1,36 @@
-#include<stdio.h> 
-#include<stdlib.h> 
-#include <unistd.h>
+#include<stdio.h>
 
-int main() {
-int i,j,noframes,x,x1=10,x2; 
-for(i=0;i<200;i++) 
-rand(); 
-noframes=rand()/200; 
-i=1; 
-j=1; 
-noframes=noframes/8; 
-printf("\n number of frames is %d",noframes); 
-while(noframes>0) 
-{  
-printf("\n sending frame %d",i); 
-srand(x1++); 
-x=rand()%10; 
-if(x%2==0) 
-{ 
-for(x2=1;x2<2;x2++) 
-{printf("waiting for %d seconds\n",x2); 
-sleep(x2); 
-} 
-printf("\nack for frame %d",j); 
-noframes-=1;
-i++; 
-j++; 
-printf("\nend of stop and wait protocol"); 
-return 0;
-}}}
+int main()
+{
+    int w,i,f,frames[50];
+
+    printf("Enter window size: ");
+    scanf("%d",&w);
+
+    printf("\nEnter number of frames to transmit: ");
+    scanf("%d",&f);
+
+    printf("\nEnter %d frames: ",f);
+
+    for(i=1;i<=f;i++)
+        scanf("%d",&frames[i]);
+
+    printf("\nWith sliding window protocol the frames will be sent in the following manner (assuming no corruption of frames)\n\n");
+    printf("After sending %d frames at each stage sender waits for acknowledgement sent by the receiver\n\n",w);
+
+    for(i=1;i<=f;i++)
+    {
+        if(i%w==0)
+        {
+            printf("%d\n",frames[i]);
+            printf("Acknowledgement of above frames sent is received by sender\n\n");
+        }
+        else
+            printf("%d ",frames[i]);
+    }
+
+    if(f%w!=0)
+        printf("\nAcknowledgement of above frames sent is received by sender\n");
+
+    return 0;
+}
